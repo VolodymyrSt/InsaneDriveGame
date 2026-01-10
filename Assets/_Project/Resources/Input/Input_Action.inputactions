@@ -34,7 +34,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Click",
+                    "name": "MousePress",
                     "type": "Button",
                     "id": "ab52e80a-0649-49d3-b249-39b2ea977fda",
                     "expectedControlType": "",
@@ -43,9 +43,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "New action",
+                    "name": "Crouch",
                     "type": "Button",
-                    "id": "f205b8c4-03d3-4a17-b733-81c982b7ef6b",
+                    "id": "400a2368-59a8-4ae3-857e-1770e5da4f9b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "82773843-c311-4815-8561-921a9066ddc1",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -137,18 +146,29 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Click",
+                    "action": "MousePress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "f2ce0091-48dc-4809-bbbe-d4ad40b2b3b8",
-                    "path": "",
+                    "id": "d2200200-5a25-4bdf-aa1a-cc0398f6b654",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cdfad0dc-bb57-437e-ad56-4e9548ac605a",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

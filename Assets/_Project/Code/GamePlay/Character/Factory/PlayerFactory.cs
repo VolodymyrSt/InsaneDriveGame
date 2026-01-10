@@ -21,7 +21,7 @@ namespace _Project.Code.GamePlay.Character.Factory
         {
             var prefab = await _assetProvider.Load<GameObject>(AssetsAddress.Character);
             var instance = _objectResolver.Instantiate(prefab, at, Quaternion.identity);
-            return instance.GetComponent<CharacterHandler>();
+            return instance.GetComponent<Character>();
         }
     }
 }

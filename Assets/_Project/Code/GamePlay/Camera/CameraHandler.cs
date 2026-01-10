@@ -1,7 +1,7 @@
 using System;
 using _Project.Code.Core.Services.Input;
+using _Project.Code.Core.Services.StaticData;
 using _Project.Code.GamePlay.Character;
-using Unity.Cinemachine;
 using UnityEngine;
 using VContainer;
 
@@ -9,51 +9,48 @@ namespace _Project.Code.GamePlay.Camera
 {
     public class CameraHandler : MonoBehaviour, ICamera
     {
-        [SerializeField] private float _sensitivity = 120f;
-        [SerializeField] private float _minPitch = -60f;
-        [SerializeField] private float _maxPitch = 60f;
-        [SerializeField] private CinemachineCamera _camera;
+        [SerializeField] private Transform _camera;
+        [SerializeField] private Transform _springRoot;
+        [SerializeField] private Transform _leanRoot;
         
-        private IInputService _inputService;
-        private CinemachinePanTilt _panTilt;
+        private IInputService _input;
+        private IStaticDataService _staticDataService;
+        private ICharacter _character;
+        private CameraSpringModule _cameraSpringModule;
+        private CameraLeanModule _cameraLeanModule;
+        private CameraLookModule _cameraLookModule;
+        
+        private Transform _target;
+        public Quaternion Rotation => transform.rotation;
         
         [Inject]
-        private void Construct(IInputService inputService) =>
-            _inputService = inputService;
-
-        public void Init(Transform target)
+        private void Construct(IInputService inputService, IStaticDataService staticDataService)
         {
-            _panTilt = _camera.GetComponent<CinemachinePanTilt>();
+            _input = inputService;
+            _staticDataService = staticDataService;
+        }
+
+        public void Init(ICharacter character)
+        {
+            _character = character;
+            _target = character.CameraTarget;
             
-            _camera.Target = new CameraTarget {
-                TrackingTarget = target
-            };
+            _cameraLookModule = new CameraLookModule(transform, _staticDataService.CameraConfig);
+            _cameraSpringModule = new CameraSpringModule(_springRoot, _staticDataService.CameraConfig);
+            _cameraLeanModule = new CameraLeanModule(_leanRoot, _staticDataService.CameraConfig);
+            
+            transform.SetParent(character.CameraHolder, false);
         }
         
-        public Vector3 GetNormalizedForward()
+        private void LateUpdate()
         {
-            var forward = transform.forward;
-            forward.y = 0;
-            return forward.normalized;
+            UpdatePosition();
+            _cameraLookModule.UpdateLook(_input.GetPlayerLookVector());
+            _cameraSpringModule.UpdateSpring(_target.up);
+            _cameraLeanModule.UpdateLean(_character.Acceleration, _target.up);
         }
-
-        public Vector3 GetNormalizedRight()
-        {
-            var right = transform.right;
-            right.y = 0;
-            return right.normalized;
-        }
-
-        private void Update() => PerformRotation();
-
-        private void PerformRotation()
-        {
-            var look = _inputService.GetPlayerLookVector();
-            
-            _panTilt.PanAxis.Value += look.x * _sensitivity * Time.deltaTime;
-            _panTilt.TiltAxis.Value -= look.y * _sensitivity * Time.deltaTime;
-
-            _panTilt.TiltAxis.Value = Mathf.Clamp(_panTilt.TiltAxis.Value, _minPitch, _maxPitch);
-        }
+        
+        private void UpdatePosition() =>
+            _camera.position = _target.position;
     }
 }

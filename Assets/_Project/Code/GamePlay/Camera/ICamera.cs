@@ -5,9 +5,8 @@ namespace _Project.Code.GamePlay.Camera
 {
     public interface ICamera
     {
-        void Init(Transform target);
+        Quaternion Rotation { get; }
 
-        Vector3 GetNormalizedForward();
-        Vector3 GetNormalizedRight();
+        void Init(ICharacter target);
     }
 }

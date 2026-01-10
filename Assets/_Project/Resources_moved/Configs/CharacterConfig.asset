@@ -12,5 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06c3581b72744ce932dba3f2eb17eaa, type: 3}
   m_Name: CharacterConfig
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Code.Configs.Character.CharacterConfigSO
-  Speed: 5
-  JumpHeight: 1.6
+  WalkSpeed: 6
+  RunSpeed: 9
+  CrouchSpeed: 3
+  AirSpeed: 5
+  WalkResponse: 20
+  RunResponse: 30
+  CrouchResponse: 20
+  CrouchHeightResponse: 15
+  JumpForce: 5
+  StandHeight: 2
+  CrouchHeight: 1
+  StandCameraTargetHeight: 0.9
+  CrouchCameraTargetHeight: 0.7
+  AirAcceleration: 70

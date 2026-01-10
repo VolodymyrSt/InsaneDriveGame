@@ -42,14 +42,5 @@ namespace _Project.Code
                 _button.onClick.RemoveAllListeners();
             });
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-                _audioService.BuildSFX()
-                    .WithCameraPosition()
-                    .WithVolume(1f)
-                    .Play("Shit");
-        }
     }
 }

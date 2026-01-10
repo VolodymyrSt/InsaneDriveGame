@@ -9,5 +9,7 @@ namespace _Project.Code.Core.Services.Input
         Vector2 GetPlayerMoveVector();
         Vector2 GetPlayerLookVector();
         bool PlayerJumpHeld();
+        bool PlayerCrouchHeld();
+        bool PlayerRunHeld();
     }
 }

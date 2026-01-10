@@ -22,13 +22,14 @@ namespace _Project.Code.Core.Infrastructure.StateMachine.States
         
         public async UniTask Enter()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             _inputService.Enable(true);
             
              var character = await _playerFactory.CreateCharacter(Vector3.up * 2);
              var camera = await _cameraFactory.CreateCamera();
              
              character.Init(camera);
-             camera.Init(character.CameraHolder);
+             camera.Init(character);
         }
     }
 }
