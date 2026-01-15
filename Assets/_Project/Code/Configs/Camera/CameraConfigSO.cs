@@ -8,6 +8,7 @@ namespace _Project.Code.Configs.Camera
         [Header("Look")]
         [Range(-90, 0)] public float MinPitch = -80f; 
         [Range(0, 90)] public float MaxPitch = 80f;
+        [Range(0, 90)] public float LookResponse = 15f;
         
         [Header("Lean")]
         public float AttackDamping = 0.5f;

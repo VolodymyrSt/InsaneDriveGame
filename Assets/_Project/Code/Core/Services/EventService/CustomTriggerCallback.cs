@@ -23,7 +23,6 @@ namespace _Project.Code.Core.Services.EventService
     [Serializable]
     public class SingleUseTrigger : CustomTriggerCallback
     {
-        
         public override void OnTriggered() => 
             Owner.gameObject.SetActive(false);
     }

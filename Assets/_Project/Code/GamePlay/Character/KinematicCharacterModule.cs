@@ -8,16 +8,16 @@ namespace _Project.Code.GamePlay.Character
     public class KinematicCharacterModule : ICharacterController
     {
         private readonly KinematicCharacterMotor _motor;
-        private readonly Transform _cameraTarget;
+        private readonly Transform _head;
         
         private readonly float _jumpForce;
         
         private readonly float _walkSpeed;
-        private readonly float _runSpeed;
+        private readonly float _sprintSpeed;
         private readonly float _crouchSpeed;
         
         private readonly float _walkResponse;
-        private readonly float _runResponse;
+        private readonly float _sprintResponse;
         private readonly float _crouchResponse;
         
         private readonly float _crouchCameraTargetHeight;
@@ -39,19 +39,19 @@ namespace _Project.Code.GamePlay.Character
         private Quaternion _requestedRotation;
         private bool _requestedJumpInput;
         private bool _requestedCrouchInput;
-        private bool _requestedRunInput;
+        private bool _requestedSprintInput;
         
         private CharacterStance _characterStance;
 
-        public KinematicCharacterModule(KinematicCharacterMotor motor, CharacterConfigSO config, Transform cameraTarget)
+        public KinematicCharacterModule(KinematicCharacterMotor motor, CharacterConfigSO config, Transform head)
         {
             _motor = motor;
-            _cameraTarget = cameraTarget;
+            _head = head;
 
             _uncrouchOverlapResults = new Collider[8];
             
             _walkSpeed                = config.WalkSpeed;
-            _runSpeed                 = config.RunSpeed;
+            _sprintSpeed              = config.SprintSpeed;
             _crouchSpeed              = config.CrouchSpeed;
             _jumpForce                = config.JumpForce;
             _crouchCameraTargetHeight = config.CrouchCameraTargetHeight;
@@ -61,7 +61,7 @@ namespace _Project.Code.GamePlay.Character
             _crouchHeightResponse     = config.CrouchHeightResponse;
             _walkResponse             = config.WalkResponse;
             _crouchResponse           = config.CrouchResponse;
-            _runResponse              = config.RunResponse;
+            _sprintResponse           = config.SprintResponse;
             _airAcceleration          = config.AirAcceleration;
             _airSpeed                 = config.AirSpeed;
         }
@@ -72,23 +72,23 @@ namespace _Project.Code.GamePlay.Character
             _characterStance = CharacterStance.Stand;
         }
 
-        public void UpdateInput(Vector3 moveInput, Quaternion rotation, bool jumpInput, bool crouchInput
-            , bool runInput)
+        public void RequestInput(Vector3 moveInput, Quaternion rotation, bool jumpInput, bool crouchInput
+            , bool sprintInput)
         {
             _requestedRotation      = rotation;
             _requestedMoveDirection = rotation * new Vector3(moveInput.x, 0f, moveInput.y).normalized;
             _requestedCrouchInput   = crouchInput;
             _requestedJumpInput     = jumpInput;
-            _requestedRunInput      = runInput;
+            _requestedSprintInput   = sprintInput;
         }
 
         public void UpdateBody()
         {
             var targetCameraHeight = GetTargetCameraHeight();
             
-            _cameraTarget.localPosition = Vector3.Lerp(
-                _cameraTarget.localPosition,
-                new Vector3(_cameraTarget.localPosition.x, targetCameraHeight, _cameraTarget.localPosition.z),
+            _head.localPosition = Vector3.Lerp(
+                _head.localPosition,
+                new Vector3(_head.localPosition.x, targetCameraHeight, _head.localPosition.z),
                 1f - Mathf.Exp(-_crouchHeightResponse * Time.deltaTime)
             );
         }
@@ -170,8 +170,8 @@ namespace _Project.Code.GamePlay.Character
                     (_requestedMoveDirection, _motor.GroundingStatus.GroundNormal)
                     .normalized;
 
-            var speed = _characterStance == CharacterStance.Stand ? _requestedRunInput ? _runSpeed : _walkSpeed : _crouchSpeed;
-            var response = _characterStance == CharacterStance.Stand ? _requestedRunInput ? _runResponse : _walkResponse : _crouchResponse;
+            var speed = _characterStance == CharacterStance.Stand ? _requestedSprintInput ? _sprintSpeed : _walkSpeed : _crouchSpeed;
+            var response = _characterStance == CharacterStance.Stand ? _requestedSprintInput ? _sprintResponse : _walkResponse : _crouchResponse;
             
             var targetVelocity = groundedMovement * speed;
                 

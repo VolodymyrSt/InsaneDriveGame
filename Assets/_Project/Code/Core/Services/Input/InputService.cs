@@ -8,6 +8,7 @@ namespace _Project.Code.Core.Services.Input
     public class InputService : IInputService
     {
         public event Action OnMousePressed;
+        public event Action OnPlayerInteracted;
         public event Action OnMousePressCanceled;
         
         private readonly Input_Action _inputAction;
@@ -20,26 +21,25 @@ namespace _Project.Code.Core.Services.Input
             {
                 _inputAction.Player.MousePress.performed += MousePressed;
                 _inputAction.Player.MousePress.canceled += MousePressedCanceled;
+                _inputAction.Player.Interact.started += PlayerInteracted;
                 _inputAction.Enable();
             }
             else
             {
                 _inputAction.Player.MousePress.performed -= MousePressed;
                 _inputAction.Player.MousePress.canceled -= MousePressedCanceled;
+                _inputAction.Player.Interact.started -= PlayerInteracted;
                 _inputAction.Disable();
             }
         }
 
-        private void MousePressed(InputAction.CallbackContext obj)
+        private void MousePressed(InputAction.CallbackContext obj) => OnMousePressed?.Invoke();
+        private void MousePressedCanceled(InputAction.CallbackContext obj) => OnMousePressCanceled?.Invoke();
+        
+        private void PlayerInteracted(InputAction.CallbackContext obj)
         {
-            Debug.Log("Mouse pressed");
-            OnMousePressed?.Invoke();
-        }
-
-        private void MousePressedCanceled(InputAction.CallbackContext obj)
-        {
-            Debug.Log("MousePressedCanceled");
-            OnMousePressCanceled?.Invoke();
+            Debug.Log("Player Interacted");
+            OnPlayerInteracted?.Invoke();
         }
 
         public bool PlayerJumpHeld() =>
@@ -48,8 +48,9 @@ namespace _Project.Code.Core.Services.Input
         public bool PlayerCrouchHeld() =>
             _inputAction.Player.Crouch.IsPressed();
         
-        public bool PlayerRunHeld() =>
-            _inputAction.Player.Run.IsPressed();
+        public bool PlayerSprintHeld() =>
+            _inputAction.Player.Sprint.IsPressed();
+        
         
         public Vector2 GetPlayerMoveVector() => 
             _inputAction.Player.Move.ReadValue<Vector2>();

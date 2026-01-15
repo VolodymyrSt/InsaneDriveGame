@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2614375961037669963}
   - component: {fileID: 3480012092079851498}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4899168348692989903}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Lean
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   m_Component:
   - component: {fileID: 857659513200621605}
   - component: {fileID: 8757838151335067378}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FPSCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3ccff19d48473db48592ac1ef9b66b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Code.GamePlay.Camera.CameraHandler
-  _camera: {fileID: 2614375961037669963}
+  _camera: {fileID: 3480012092079851498}
   _springRoot: {fileID: 6565952142670462992}
   _leanRoot: {fileID: 4899168348692989903}
 --- !u!1 &8737583786306757301
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6565952142670462992}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Spring
   m_TagString: Untagged
   m_Icon: {fileID: 0}

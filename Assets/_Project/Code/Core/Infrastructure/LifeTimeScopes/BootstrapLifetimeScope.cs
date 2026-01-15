@@ -26,7 +26,6 @@ namespace _Project.Code.Core.Infrastructure.LifeTimeScopes
             RegisterGameStateMachine(builder);
             RegisterStates(builder);
             RegisterSceneLoader(builder);
-            RegisterEventBus(builder);
             RegisterCoroutineRunner(builder);
             RegisterGameFactory(builder);
             RegisterLoadingCurtain(builder);
@@ -58,9 +57,6 @@ namespace _Project.Code.Core.Infrastructure.LifeTimeScopes
 
         private void RegisterCoroutineRunner(IContainerBuilder builder) => 
             builder.RegisterInstance(_coroutineRunner).As<ICoroutineRunner>();
-
-        private static void RegisterEventBus(IContainerBuilder builder) => 
-            builder.Register<EventBus>(Lifetime.Singleton).AsImplementedInterfaces();
 
         private static void RegisterSceneLoader(IContainerBuilder builder) =>
             builder.Register<SceneLoader>(Lifetime.Singleton).AsImplementedInterfaces();

@@ -52,9 +52,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Run",
+                    "name": "Sprint",
                     "type": "Button",
                     "id": "82773843-c311-4815-8561-921a9066ddc1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "e3cf3145-e271-481f-a8fa-eb72a017426a",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -168,7 +177,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Run",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4775e284-857f-49c8-bb06-bbaaa7c1f5db",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

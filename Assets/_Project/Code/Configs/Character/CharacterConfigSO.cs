@@ -7,13 +7,13 @@ namespace _Project.Code.Configs.Character
     {
         [Header("Speed")]
         public float WalkSpeed;
-        public float RunSpeed = 9;
+        public float SprintSpeed = 9;
         public float CrouchSpeed;
         public float AirSpeed = 15f;
         
         [Header("Response")]
         public float WalkResponse = 20f;
-        public float RunResponse = 30f;
+        public float SprintResponse = 30f;
         public float CrouchResponse = 20f;
         public float CrouchHeightResponse = 15f;
         
@@ -30,5 +30,8 @@ namespace _Project.Code.Configs.Character
         
         [Header("Air")]
         public float AirAcceleration = 70f;
+        
+        [Header("Interaction")]
+        public float InteractionDistance = 5f;
     }
 }

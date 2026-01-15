@@ -49,9 +49,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Code.GamePlay.Character.Character
   _kinematicMotor: {fileID: 3717919313961554890}
-  _animator: {fileID: 0}
   _cameraHolder: {fileID: 3866111258666767764}
-  _cameraTarget: {fileID: 112219588472021092}
+  _head: {fileID: 112219588472021092}
+  _interactionLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!136 &2439457523161537957
 CapsuleCollider:
   m_ObjectHideFlags: 8
@@ -127,7 +129,7 @@ GameObject:
   m_Component:
   - component: {fileID: 112219588472021092}
   m_Layer: 0
-  m_Name: CameraTarget
+  m_Name: HeadPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

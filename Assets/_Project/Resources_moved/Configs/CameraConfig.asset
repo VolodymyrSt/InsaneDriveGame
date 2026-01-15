@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::_Project.Code.Configs.Camera.CameraConfigSO
   MinPitch: -80
   MaxPitch: 80
+  LookResponse: 50
   AttackDamping: 0.5
   DecayDamping: 0.3
   LeanStrength: 0.075
