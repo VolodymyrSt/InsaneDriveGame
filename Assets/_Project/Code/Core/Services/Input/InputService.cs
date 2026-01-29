@@ -51,6 +51,9 @@ namespace _Project.Code.Core.Services.Input
         public bool PlayerSprintHeld() =>
             _inputAction.Player.Sprint.IsPressed();
         
+        public Vector2 GetCarDriveVector() => 
+            _inputAction.Car.Drive.ReadValue<Vector2>();
+        
         
         public Vector2 GetPlayerMoveVector() => 
             _inputAction.Player.Move.ReadValue<Vector2>();

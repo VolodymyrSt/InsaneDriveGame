@@ -9,8 +9,15 @@ namespace _Project.Code.GamePlay.UI.ToolTip
 {
     public class ToolTipView : MonoBehaviour
     {
-        [SerializeField] protected RectTransform _root;
-        [SerializeField] protected TextMeshProUGUI _massage;
+        [Header("Base")]
+        [SerializeField] private RectTransform _root;
+
+        [Header("ToolTip")]
+        [SerializeField] private RectTransform _massageBackground;
+        [SerializeField] private TextMeshProUGUI _massage;
+        
+        [SerializeField] private float _horizontalPadding = 24f;
+        [SerializeField] private float _verticalPadding = 12f;
 
         private bool _isHidden;
         private Tween _previewTween;
@@ -22,9 +29,15 @@ namespace _Project.Code.GamePlay.UI.ToolTip
             _isHidden = true;
         }
 
-        public void Preview(InteractableType type)
+        public void ShowFor(InteractableInfo info)
         {
-            _massage.text = type.ToString();
+            _massage.text = info.Name;
+
+            var textWidth = _massage.GetPreferredValues(info.Name).x + _horizontalPadding;
+            var textHeight = _massage.GetPreferredValues(info.Name, textWidth, 0).y + _verticalPadding;
+            
+            _massageBackground.sizeDelta = new Vector2(textWidth, textHeight);
+
             _root.localScale = Vector3.zero;
             _root.SetActive(true);
             
@@ -33,7 +46,6 @@ namespace _Project.Code.GamePlay.UI.ToolTip
             
             _previewTween = _root.DOScale(Constants.Scaled, Constants.BaseAnimationDuration)
                 .SetEase(Ease.Linear)
-                .SetDelay(0.2f)
                 .Play();
         }
 

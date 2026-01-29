@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Code.GamePlay.CameraLogic
 {
-    public class CameraLeanModule
+    public class CameraLeanModifier
     {
         private readonly Transform _leanRoot;
         
@@ -17,7 +17,7 @@ namespace _Project.Code.GamePlay.CameraLogic
         
         private float _smoothStrength;
         
-        public CameraLeanModule(Transform leanRoot, CameraConfigSO config)
+        public CameraLeanModifier(Transform leanRoot, CameraConfigSO config)
         {
             _leanRoot = leanRoot;
 

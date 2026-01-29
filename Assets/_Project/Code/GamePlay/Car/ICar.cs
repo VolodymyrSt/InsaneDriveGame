@@ -6,5 +6,8 @@ namespace _Project.Code.GamePlay.Car
     {
         Transform Transform { get; }
         void Init();
+
+        void SetCarIgnited(bool isCarIgnited);
+        void SetInCar(bool isInCar);
     }
 }

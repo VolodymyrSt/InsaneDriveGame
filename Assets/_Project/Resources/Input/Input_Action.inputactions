@@ -193,6 +193,67 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Car",
+            "id": "7bee83b7-e29e-49fb-b399-e9d9af62c484",
+            "actions": [
+                {
+                    "name": "Drive",
+                    "type": "Value",
+                    "id": "87518df6-58a7-41ac-97f5-ec267862d8f6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "2D Vector",
+                    "id": "f56e3845-a0c2-4979-86f3-72a3a61bce9b",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drive",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "de450bec-f1e0-484a-a2a1-48b5896fdf4d",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drive",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "f4f3f9d4-6263-4359-99ab-761ff65973b1",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drive",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "e2e7e21f-a8c7-4646-9b26-5e2b9cde0273",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Drive",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": []

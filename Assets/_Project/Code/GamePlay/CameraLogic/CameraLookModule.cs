@@ -39,14 +39,8 @@ namespace _Project.Code.GamePlay.CameraLogic
 
         public void UpdateLook(Vector3 inputLook) 
         { 
-            if (_mode == CameraLookMode.Vehicle && _vehicle != null)
-            {
-                float currentVehicleYaw = NormalizeAngle(_vehicle.eulerAngles.y);
-                float deltaYaw = Mathf.DeltaAngle(_lastVehicleYaw, currentVehicleYaw);
-
-                _yaw += deltaYaw;
-                _lastVehicleYaw = currentVehicleYaw;
-            }
+            if (_mode == CameraLookMode.Vehicle && _vehicle != null) 
+                ApplyVehicleYaw();
             
             _currentLook = Vector2.Lerp(_currentLook, inputLook, 1f - Mathf.Exp(-_lookResponse * Time.deltaTime));
             
@@ -56,7 +50,7 @@ namespace _Project.Code.GamePlay.CameraLogic
             ApplyClamp();
             ApplyRotation();
         }
-        
+
         public void SetMode(CameraLookMode mode) => 
             _mode = mode;
         
@@ -86,8 +80,8 @@ namespace _Project.Code.GamePlay.CameraLogic
         {
             if (_mode == CameraLookMode.Vehicle)
             {
-                float vehicleYaw = NormalizeAngle(_vehicle.eulerAngles.y);
-                float localYaw = Mathf.DeltaAngle(vehicleYaw, _yaw);
+                var vehicleYaw = NormalizeAngle(_vehicle.eulerAngles.y);
+                var localYaw = Mathf.DeltaAngle(vehicleYaw, _yaw);
 
                 localYaw = Mathf.Clamp(localYaw, _minYaw, _maxYaw);
                 _pitch = Mathf.Clamp(_pitch, _minPitch, _maxPitch);
@@ -96,6 +90,15 @@ namespace _Project.Code.GamePlay.CameraLogic
             }
             else
                 _pitch = Mathf.Clamp(_pitch, _config.MinPitch, _config.MaxPitch);
+        }
+        
+        private void ApplyVehicleYaw()
+        {
+            var currentVehicleYaw = NormalizeAngle(_vehicle.eulerAngles.y);
+            var deltaYaw = Mathf.DeltaAngle(_lastVehicleYaw, currentVehicleYaw);
+
+            _yaw += deltaYaw;
+            _lastVehicleYaw = currentVehicleYaw;
         }
         
         private void InitializeYawPitch(Transform cameraTransform)

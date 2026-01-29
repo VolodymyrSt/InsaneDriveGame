@@ -32,7 +32,7 @@ namespace _Project.Code.GamePlay.UI
         }
 
         private void PreviewFoundInteractable(OnInteractableFound signal) => 
-            _toolTipView.Preview(signal.Interactable.Type);  
+            _toolTipView.ShowFor(signal.Interactable.Info);  
         private void HidePreview(OnInteractableLost signal) => 
             _toolTipView.Hide();
 

@@ -13,5 +13,6 @@ namespace _Project.Code.Core.Services.Input
         bool PlayerJumpHeld();
         bool PlayerCrouchHeld();
         bool PlayerSprintHeld();
+        Vector2 GetCarDriveVector();
     }
 }

@@ -18,8 +18,8 @@ namespace _Project.Code.GamePlay.CameraLogic
         private IInputService _input;
         private IStaticDataService _staticDataService;
         private ICharacter _character;
-        private CameraSpringModule _cameraSpringModule;
-        private CameraLeanModule _cameraLeanModule;
+        private CameraSpringModifier _cameraSpringModifier;
+        private CameraLeanModifier _cameraLeanModifier;
         private CameraLookModule _cameraLookModule;
         
         private Transform _target;
@@ -29,6 +29,7 @@ namespace _Project.Code.GamePlay.CameraLogic
         public CameraLookModule LookModule => _cameraLookModule;
         
         private bool _isInitialized = false;
+        private bool _withModifiers = true;
         
         [Inject]
         private void Construct(IInputService inputService, IStaticDataService staticDataService)
@@ -43,13 +44,17 @@ namespace _Project.Code.GamePlay.CameraLogic
             _target = character.Head;
             
             _cameraLookModule = new CameraLookModule(transform, _staticDataService.CameraConfig);
-            _cameraSpringModule = new CameraSpringModule(_springRoot, _staticDataService.CameraConfig);
-            _cameraLeanModule = new CameraLeanModule(_leanRoot, _staticDataService.CameraConfig);
+            _cameraSpringModifier = new CameraSpringModifier(_springRoot, _staticDataService.CameraConfig);
+            _cameraLeanModifier = new CameraLeanModifier(_leanRoot, _staticDataService.CameraConfig);
             
             transform.SetParent(character.CameraHolder, false);
             
             _isInitialized = true;
+            _withModifiers = true;
         }
+        
+        public void WithModifiers(bool withModifiers) => 
+            _withModifiers = withModifiers;
 
         private void Update()
         {
@@ -61,8 +66,10 @@ namespace _Project.Code.GamePlay.CameraLogic
         {
             if (!_isInitialized) return;
             UpdatePosition();
-            _cameraSpringModule.UpdateSpring(_target.up);
-            _cameraLeanModule.UpdateLean(_character.Acceleration, _target.up);
+            
+            if (!_withModifiers) return;
+            _cameraSpringModifier.UpdateSpring(_target.up);
+            _cameraLeanModifier.UpdateLean(_character.Acceleration, _target.up);
         }
         
         private void UpdatePosition() =>

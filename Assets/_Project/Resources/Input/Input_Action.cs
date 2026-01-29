@@ -279,6 +279,67 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Car"",
+            ""id"": ""7bee83b7-e29e-49fb-b399-e9d9af62c484"",
+            ""actions"": [
+                {
+                    ""name"": ""Drive"",
+                    ""type"": ""Value"",
+                    ""id"": ""87518df6-58a7-41ac-97f5-ec267862d8f6"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""f56e3845-a0c2-4979-86f3-72a3a61bce9b"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drive"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""de450bec-f1e0-484a-a2a1-48b5896fdf4d"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""f4f3f9d4-6263-4359-99ab-761ff65973b1"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""e2e7e21f-a8c7-4646-9b26-5e2b9cde0273"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -292,11 +353,15 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        // Car
+        m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
+        m_Car_Drive = m_Car.FindAction("Drive", throwIfNotFound: true);
     }
 
     ~@Input_Action()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, Input_Action.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Car.enabled, "This will cause a leak and performance issues, Input_Action.Car.Disable() has not been called.");
     }
 
     /// <summary>
@@ -530,6 +595,102 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="PlayerActions" /> instance referencing this action map.
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Car
+    private readonly InputActionMap m_Car;
+    private List<ICarActions> m_CarActionsCallbackInterfaces = new List<ICarActions>();
+    private readonly InputAction m_Car_Drive;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Car".
+    /// </summary>
+    public struct CarActions
+    {
+        private @Input_Action m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public CarActions(@Input_Action wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Car/Drive".
+        /// </summary>
+        public InputAction @Drive => m_Wrapper.m_Car_Drive;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Car; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="CarActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(CarActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="CarActions" />
+        public void AddCallbacks(ICarActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CarActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CarActionsCallbackInterfaces.Add(instance);
+            @Drive.started += instance.OnDrive;
+            @Drive.performed += instance.OnDrive;
+            @Drive.canceled += instance.OnDrive;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="CarActions" />
+        private void UnregisterCallbacks(ICarActions instance)
+        {
+            @Drive.started -= instance.OnDrive;
+            @Drive.performed -= instance.OnDrive;
+            @Drive.canceled -= instance.OnDrive;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="CarActions.UnregisterCallbacks(ICarActions)" />.
+        /// </summary>
+        /// <seealso cref="CarActions.UnregisterCallbacks(ICarActions)" />
+        public void RemoveCallbacks(ICarActions instance)
+        {
+            if (m_Wrapper.m_CarActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="CarActions.AddCallbacks(ICarActions)" />
+        /// <seealso cref="CarActions.RemoveCallbacks(ICarActions)" />
+        /// <seealso cref="CarActions.UnregisterCallbacks(ICarActions)" />
+        public void SetCallbacks(ICarActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CarActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CarActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="CarActions" /> instance referencing this action map.
+    /// </summary>
+    public CarActions @Car => new CarActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -586,5 +747,20 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Car" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="CarActions.AddCallbacks(ICarActions)" />
+    /// <seealso cref="CarActions.RemoveCallbacks(ICarActions)" />
+    public interface ICarActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "Drive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnDrive(InputAction.CallbackContext context);
     }
 }

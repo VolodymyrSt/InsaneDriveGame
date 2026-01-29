@@ -13,5 +13,6 @@ namespace _Project.Code.GamePlay.CameraLogic
         CameraLookModule LookModule { get; }
 
         void Init(ICharacter target);
+        void WithModifiers(bool withAnimation);
     }
 }

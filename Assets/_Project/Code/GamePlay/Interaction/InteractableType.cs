@@ -1,10 +1,12 @@
+using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+
 namespace _Project.Code.GamePlay.Interaction
 {
-    public enum InteractableType {   
-        Toggle,    
-        Open,     
-        Close, 
-        Use,     
-        Hold 
+    [Serializable]
+    public class InteractableInfo
+    {
+        public string Name;
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace _Project.Code.GamePlay.CameraLogic
 {
-    public class CameraSpringModule
+    public class CameraSpringModifier
     {
         private readonly Transform _springRoot;
         
@@ -15,7 +15,7 @@ namespace _Project.Code.GamePlay.CameraLogic
         private readonly float _angularDisplacement;
         private readonly float _linerDisplacement;
         
-        public CameraSpringModule(Transform springRoot, CameraConfigSO config)
+        public CameraSpringModifier(Transform springRoot, CameraConfigSO config)
         {
             _springRoot = springRoot;
 
