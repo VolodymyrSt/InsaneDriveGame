@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using _Project.Code.Core.Services.Input;
 using _Project.Code.Core.Services.StaticData;
 using _Project.Code.GamePlay.Car;
@@ -29,6 +30,7 @@ namespace _Project.Code.GamePlay.CameraLogic
         public CameraLookModule LookModule => _cameraLookModule;
         
         private bool _isInitialized = false;
+        private bool _isLookBlocked = false;
         private bool _withModifiers = true;
         
         [Inject]
@@ -51,27 +53,48 @@ namespace _Project.Code.GamePlay.CameraLogic
             
             _isInitialized = true;
             _withModifiers = true;
+            _isLookBlocked = false;
         }
         
         public void WithModifiers(bool withModifiers) => 
             _withModifiers = withModifiers;
-
-        private void Update()
+        
+        public void BlockCharacterLook()
         {
-            if (!_isInitialized) return;
-            _cameraLookModule.UpdateLook(_input.GetPlayerLookVector());
+            if (_isLookBlocked) return;
+            _isLookBlocked = true;
+        }
+
+        public void UnblockCharacterLook()
+        {
+            if (!_isLookBlocked) return;
+            _isLookBlocked = false;
         }
 
         private void LateUpdate()
         {
             if (!_isInitialized) return;
-            UpdatePosition();
             
+            UpdatePosition();
+            UpdateLook();
+            UpdateModifier();
+        }
+
+        private void UpdateModifier()
+        {
             if (!_withModifiers) return;
             _cameraSpringModifier.UpdateSpring(_target.up);
             _cameraLeanModifier.UpdateLean(_character.Acceleration, _target.up);
         }
-        
+
+        private void UpdateLook()
+        {
+            if (!_isLookBlocked)
+                _cameraLookModule.UpdateLook(_input.GetCharacterLookVector());
+            else
+                _cameraLookModule.UpdateLook(Vector3.zero);
+        }
+
         private void UpdatePosition() =>
             _camera.transform.position = _target.position;
     }

@@ -7,11 +7,12 @@ namespace _Project.Code.Core.Services.Input
 {
     public class InputService : IInputService
     {
-        public event Action OnMousePressed;
         public event Action OnPlayerInteracted;
-        public event Action OnMousePressCanceled;
         
         private readonly Input_Action _inputAction;
+        private bool _isMousePressed = false;
+        
+        public bool IsMousePressed => _isMousePressed;
         
         public InputService() => _inputAction = new Input_Action();
         
@@ -21,6 +22,7 @@ namespace _Project.Code.Core.Services.Input
             {
                 _inputAction.Player.MousePress.performed += MousePressed;
                 _inputAction.Player.MousePress.canceled += MousePressedCanceled;
+                
                 _inputAction.Player.Interact.started += PlayerInteracted;
                 _inputAction.Enable();
             }
@@ -28,19 +30,20 @@ namespace _Project.Code.Core.Services.Input
             {
                 _inputAction.Player.MousePress.performed -= MousePressed;
                 _inputAction.Player.MousePress.canceled -= MousePressedCanceled;
+                
                 _inputAction.Player.Interact.started -= PlayerInteracted;
                 _inputAction.Disable();
             }
         }
 
-        private void MousePressed(InputAction.CallbackContext obj) => OnMousePressed?.Invoke();
-        private void MousePressedCanceled(InputAction.CallbackContext obj) => OnMousePressCanceled?.Invoke();
-        
-        private void PlayerInteracted(InputAction.CallbackContext obj)
-        {
-            Debug.Log("Player Interacted");
+        private void MousePressed(InputAction.CallbackContext obj) => 
+            _isMousePressed = true;
+
+        private void MousePressedCanceled(InputAction.CallbackContext obj) => 
+            _isMousePressed = false;
+
+        private void PlayerInteracted(InputAction.CallbackContext obj) => 
             OnPlayerInteracted?.Invoke();
-        }
 
         public bool PlayerJumpHeld() =>
             _inputAction.Player.Jump.IsPressed();
@@ -51,14 +54,25 @@ namespace _Project.Code.Core.Services.Input
         public bool PlayerSprintHeld() =>
             _inputAction.Player.Sprint.IsPressed();
         
-        public Vector2 GetCarDriveVector() => 
-            _inputAction.Car.Drive.ReadValue<Vector2>();
+        public float GetCarSteeringWheelTurnAxis() => 
+            _inputAction.Car.SteeringWheel.ReadValue<float>();   
         
+        public float GetCarGasInput() => 
+            _inputAction.Car.Gas.ReadValue<float>();
         
-        public Vector2 GetPlayerMoveVector() => 
+        public float GetCarClutchInput() => 
+            _inputAction.Car.Clutch.ReadValue<float>();  
+        
+        public float GetCarBreakInput() => 
+            _inputAction.Car.Break.ReadValue<float>();
+        
+        public Vector2 GetCharacterMoveVector() => 
             _inputAction.Player.Move.ReadValue<Vector2>();
         
-        public Vector2 GetPlayerLookVector() => 
+        public Vector2 GetCharacterLookVector() => 
             _inputAction.Player.Look.ReadValue<Vector2>();
+        
+        public Vector2 GetMouseDelta() => 
+            _inputAction.Player.MouseDelta.ReadValue<Vector2>();
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Project.Code.Configs.Camera
 {
-    [CreateAssetMenu(fileName = "Camera Config", menuName = "Configs")]
+    [CreateAssetMenu(fileName = "Camera Config", menuName = "Configs/Camera")]
     public class CameraConfigSO : ScriptableObject
     {
         [Header("Look")]

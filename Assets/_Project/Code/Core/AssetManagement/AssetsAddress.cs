@@ -10,5 +10,6 @@ namespace _Project.Code.Core.AssetManagement
         public static string CharacterConfig = "CharacterConfig";
         public static string CompositionsHolder = "CompositionsHolder";
         public static string CameraConfig = "CameraConfig";
+        public static string CarConfig = "CarConfig";
     }
 }

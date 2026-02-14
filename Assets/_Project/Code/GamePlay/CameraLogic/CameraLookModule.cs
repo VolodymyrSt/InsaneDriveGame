@@ -38,10 +38,7 @@ namespace _Project.Code.GamePlay.CameraLogic
         }
 
         public void UpdateLook(Vector3 inputLook) 
-        { 
-            if (_mode == CameraLookMode.Vehicle && _vehicle != null) 
-                ApplyVehicleYaw();
-            
+        {
             _currentLook = Vector2.Lerp(_currentLook, inputLook, 1f - Mathf.Exp(-_lookResponse * Time.deltaTime));
             
             _yaw += _currentLook.x * _sensitivity * Time.deltaTime;
@@ -50,7 +47,7 @@ namespace _Project.Code.GamePlay.CameraLogic
             ApplyClamp();
             ApplyRotation();
         }
-
+        
         public void SetMode(CameraLookMode mode) => 
             _mode = mode;
         
@@ -72,33 +69,32 @@ namespace _Project.Code.GamePlay.CameraLogic
 
             _mode = CameraLookMode.Vehicle;
         }
-        
-        private void ApplyRotation() => 
-            _cameraTransform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
 
+        private void ApplyRotation()
+        {
+            if (_mode == CameraLookMode.Vehicle && _vehicle != null)
+            {
+                float finalYaw = _vehicle.eulerAngles.y + _yaw;
+                _cameraTransform.rotation = Quaternion.Euler(_pitch, finalYaw, 0f);
+            }
+            else
+                _cameraTransform.rotation = Quaternion.Euler(_pitch, _yaw, 0f);
+        }
+        
         private void ApplyClamp()
         {
             if (_mode == CameraLookMode.Vehicle)
             {
-                var vehicleYaw = NormalizeAngle(_vehicle.eulerAngles.y);
-                var localYaw = Mathf.DeltaAngle(vehicleYaw, _yaw);
+                float vehicleYaw = _vehicle.eulerAngles.y;
+                float relativeYaw = Mathf.DeltaAngle(vehicleYaw, _yaw + vehicleYaw);
+                
+                relativeYaw = Mathf.Clamp(relativeYaw, _minYaw, _maxYaw);
 
-                localYaw = Mathf.Clamp(localYaw, _minYaw, _maxYaw);
+                _yaw = relativeYaw; 
                 _pitch = Mathf.Clamp(_pitch, _minPitch, _maxPitch);
-
-                _yaw = vehicleYaw + localYaw;
             }
             else
                 _pitch = Mathf.Clamp(_pitch, _config.MinPitch, _config.MaxPitch);
-        }
-        
-        private void ApplyVehicleYaw()
-        {
-            var currentVehicleYaw = NormalizeAngle(_vehicle.eulerAngles.y);
-            var deltaYaw = Mathf.DeltaAngle(_lastVehicleYaw, currentVehicleYaw);
-
-            _yaw += deltaYaw;
-            _lastVehicleYaw = currentVehicleYaw;
         }
         
         private void InitializeYawPitch(Transform cameraTransform)

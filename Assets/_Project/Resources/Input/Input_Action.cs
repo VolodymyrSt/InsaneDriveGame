@@ -154,6 +154,15 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""f51b00cf-1d0b-47c5-9d0c-1c550d6fd77d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -277,6 +286,17 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""420549b6-3a0b-4ff6-86ee-087b92453747"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -285,10 +305,37 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
             ""id"": ""7bee83b7-e29e-49fb-b399-e9d9af62c484"",
             ""actions"": [
                 {
-                    ""name"": ""Drive"",
+                    ""name"": ""SteeringWheel"",
                     ""type"": ""Value"",
-                    ""id"": ""87518df6-58a7-41ac-97f5-ec267862d8f6"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""id"": ""06b7d072-8b0b-4e40-8ae5-51a1ec94a21d"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Break"",
+                    ""type"": ""Value"",
+                    ""id"": ""283cb59e-fd49-496f-be2c-e5a266974bec"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Gas"",
+                    ""type"": ""Value"",
+                    ""id"": ""6d4645e9-fe37-40fd-b23d-c2be16b97812"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Clutch"",
+                    ""type"": ""Value"",
+                    ""id"": ""4a88b0c3-073e-4daa-8543-ef02f6f37da9"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -296,48 +343,70 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
             ],
             ""bindings"": [
                 {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""f56e3845-a0c2-4979-86f3-72a3a61bce9b"",
-                    ""path"": ""2DVector"",
+                    ""name"": ""1D Axis"",
+                    ""id"": ""abdee6f1-bd1d-4bcc-9b7c-0b3b6841f120"",
+                    ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drive"",
+                    ""action"": ""SteeringWheel"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""up"",
-                    ""id"": ""de450bec-f1e0-484a-a2a1-48b5896fdf4d"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Drive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""f4f3f9d4-6263-4359-99ab-761ff65973b1"",
+                    ""name"": ""negative"",
+                    ""id"": ""6ae57cea-3156-4942-a0cb-81f3f45cf2e3"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drive"",
+                    ""action"": ""SteeringWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""right"",
-                    ""id"": ""e2e7e21f-a8c7-4646-9b26-5e2b9cde0273"",
+                    ""name"": ""positive"",
+                    ""id"": ""5aee4264-b58d-4b41-9d33-90cb06cf5803"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Drive"",
+                    ""action"": ""SteeringWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""be2d4dc3-05ba-4010-a603-af154dff786d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Break"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cacc126c-cd82-4585-8f1b-542f07eb8f52"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Gas"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e094755-01ab-4a7a-8c8d-2a351f02f10c"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Clutch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -353,9 +422,13 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_MouseDelta = m_Player.FindAction("MouseDelta", throwIfNotFound: true);
         // Car
         m_Car = asset.FindActionMap("Car", throwIfNotFound: true);
-        m_Car_Drive = m_Car.FindAction("Drive", throwIfNotFound: true);
+        m_Car_SteeringWheel = m_Car.FindAction("SteeringWheel", throwIfNotFound: true);
+        m_Car_Break = m_Car.FindAction("Break", throwIfNotFound: true);
+        m_Car_Gas = m_Car.FindAction("Gas", throwIfNotFound: true);
+        m_Car_Clutch = m_Car.FindAction("Clutch", throwIfNotFound: true);
     }
 
     ~@Input_Action()
@@ -444,6 +517,7 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_MouseDelta;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -483,6 +557,10 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Interact".
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MouseDelta".
+        /// </summary>
+        public InputAction @MouseDelta => m_Wrapper.m_Player_MouseDelta;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -530,6 +608,9 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
         }
 
         /// <summary>
@@ -562,6 +643,9 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
         }
 
         /// <summary>
@@ -599,7 +683,10 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
     // Car
     private readonly InputActionMap m_Car;
     private List<ICarActions> m_CarActionsCallbackInterfaces = new List<ICarActions>();
-    private readonly InputAction m_Car_Drive;
+    private readonly InputAction m_Car_SteeringWheel;
+    private readonly InputAction m_Car_Break;
+    private readonly InputAction m_Car_Gas;
+    private readonly InputAction m_Car_Clutch;
     /// <summary>
     /// Provides access to input actions defined in input action map "Car".
     /// </summary>
@@ -612,9 +699,21 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
         /// </summary>
         public CarActions(@Input_Action wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Car/Drive".
+        /// Provides access to the underlying input action "Car/SteeringWheel".
         /// </summary>
-        public InputAction @Drive => m_Wrapper.m_Car_Drive;
+        public InputAction @SteeringWheel => m_Wrapper.m_Car_SteeringWheel;
+        /// <summary>
+        /// Provides access to the underlying input action "Car/Break".
+        /// </summary>
+        public InputAction @Break => m_Wrapper.m_Car_Break;
+        /// <summary>
+        /// Provides access to the underlying input action "Car/Gas".
+        /// </summary>
+        public InputAction @Gas => m_Wrapper.m_Car_Gas;
+        /// <summary>
+        /// Provides access to the underlying input action "Car/Clutch".
+        /// </summary>
+        public InputAction @Clutch => m_Wrapper.m_Car_Clutch;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -641,9 +740,18 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_CarActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_CarActionsCallbackInterfaces.Add(instance);
-            @Drive.started += instance.OnDrive;
-            @Drive.performed += instance.OnDrive;
-            @Drive.canceled += instance.OnDrive;
+            @SteeringWheel.started += instance.OnSteeringWheel;
+            @SteeringWheel.performed += instance.OnSteeringWheel;
+            @SteeringWheel.canceled += instance.OnSteeringWheel;
+            @Break.started += instance.OnBreak;
+            @Break.performed += instance.OnBreak;
+            @Break.canceled += instance.OnBreak;
+            @Gas.started += instance.OnGas;
+            @Gas.performed += instance.OnGas;
+            @Gas.canceled += instance.OnGas;
+            @Clutch.started += instance.OnClutch;
+            @Clutch.performed += instance.OnClutch;
+            @Clutch.canceled += instance.OnClutch;
         }
 
         /// <summary>
@@ -655,9 +763,18 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
         /// <seealso cref="CarActions" />
         private void UnregisterCallbacks(ICarActions instance)
         {
-            @Drive.started -= instance.OnDrive;
-            @Drive.performed -= instance.OnDrive;
-            @Drive.canceled -= instance.OnDrive;
+            @SteeringWheel.started -= instance.OnSteeringWheel;
+            @SteeringWheel.performed -= instance.OnSteeringWheel;
+            @SteeringWheel.canceled -= instance.OnSteeringWheel;
+            @Break.started -= instance.OnBreak;
+            @Break.performed -= instance.OnBreak;
+            @Break.canceled -= instance.OnBreak;
+            @Gas.started -= instance.OnGas;
+            @Gas.performed -= instance.OnGas;
+            @Gas.canceled -= instance.OnGas;
+            @Clutch.started -= instance.OnClutch;
+            @Clutch.performed -= instance.OnClutch;
+            @Clutch.canceled -= instance.OnClutch;
         }
 
         /// <summary>
@@ -747,6 +864,13 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Car" which allows adding and removing callbacks.
@@ -756,11 +880,32 @@ public partial class @Input_Action: IInputActionCollection2, IDisposable
     public interface ICarActions
     {
         /// <summary>
-        /// Method invoked when associated input action "Drive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SteeringWheel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDrive(InputAction.CallbackContext context);
+        void OnSteeringWheel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Break" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnBreak(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Gas" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGas(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Clutch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnClutch(InputAction.CallbackContext context);
     }
 }

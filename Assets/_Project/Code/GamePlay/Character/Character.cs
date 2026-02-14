@@ -4,6 +4,8 @@ using _Project.Code.Core.Services.EventService;
 using _Project.Code.Core.Services.Input;
 using _Project.Code.Core.Services.StaticData;
 using _Project.Code.GamePlay.CameraLogic;
+using _Project.Code.GamePlay.Car.Parts.GearShifter;
+using _Project.Code.Test;
 using KinematicCharacterController;
 using UnityEngine;
 using VContainer;
@@ -57,7 +59,7 @@ namespace _Project.Code.GamePlay.Character
             _baseHeadPosition = _head.localPosition;
             
             _kinematicCharacterModule = new KinematicCharacterModule(_kinematicMotor, _config, _head);
-            _characterInteractorModule = new CharacterInteractorModule(_camera , _head, _config, _interactionLayer, _eventBus);
+            _characterInteractorModule = new CharacterInteractorModule(_camera, _head, _config, _interactionLayer, _eventBus);
             _kinematicCharacterModule.Init();
             
             _input.OnPlayerInteracted += OnInteracted;
@@ -71,8 +73,10 @@ namespace _Project.Code.GamePlay.Character
             if (!_isInitialized) return;
             if (_canProcessMovement)
                 UpdateKinematicMovement();
-            
+                
+            _characterInteractorModule.RequestInput(_input.IsMousePressed);
             _characterInteractorModule.UpdateTarget();
+            _characterInteractorModule.TryGrabSmth();
         }
         
         public void Activate()
@@ -98,7 +102,7 @@ namespace _Project.Code.GamePlay.Character
         private void UpdateKinematicMovement()
         {
             _kinematicCharacterModule.RequestInput(
-                _input.GetPlayerMoveVector(), 
+                _input.GetCharacterMoveVector(), 
                 _camera.Rotation, 
                 _input.PlayerJumpHeld(), 
                 _input.PlayerCrouchHeld(),

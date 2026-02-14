@@ -34,7 +34,7 @@ namespace _Project.Code.Core.Infrastructure.StateMachine.States
              
              character.Init(camera);
              camera.Init(character);
-             car.Init();
+             car.Init(camera);
         }
     }
 }

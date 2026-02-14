@@ -14,5 +14,7 @@ namespace _Project.Code.GamePlay.CameraLogic
 
         void Init(ICharacter target);
         void WithModifiers(bool withAnimation);
+        void BlockCharacterLook();
+        void UnblockCharacterLook();
     }
 }

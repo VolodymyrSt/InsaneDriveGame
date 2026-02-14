@@ -68,6 +68,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "MouseDelta",
+                    "type": "Value",
+                    "id": "f51b00cf-1d0b-47c5-9d0c-1c550d6fd77d",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -191,6 +200,17 @@
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "420549b6-3a0b-4ff6-86ee-087b92453747",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseDelta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -199,10 +219,37 @@
             "id": "7bee83b7-e29e-49fb-b399-e9d9af62c484",
             "actions": [
                 {
-                    "name": "Drive",
+                    "name": "SteeringWheel",
                     "type": "Value",
-                    "id": "87518df6-58a7-41ac-97f5-ec267862d8f6",
-                    "expectedControlType": "Vector2",
+                    "id": "06b7d072-8b0b-4e40-8ae5-51a1ec94a21d",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Break",
+                    "type": "Value",
+                    "id": "283cb59e-fd49-496f-be2c-e5a266974bec",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Gas",
+                    "type": "Value",
+                    "id": "6d4645e9-fe37-40fd-b23d-c2be16b97812",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Clutch",
+                    "type": "Value",
+                    "id": "4a88b0c3-073e-4daa-8543-ef02f6f37da9",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -210,48 +257,70 @@
             ],
             "bindings": [
                 {
-                    "name": "2D Vector",
-                    "id": "f56e3845-a0c2-4979-86f3-72a3a61bce9b",
-                    "path": "2DVector",
+                    "name": "1D Axis",
+                    "id": "abdee6f1-bd1d-4bcc-9b7c-0b3b6841f120",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drive",
+                    "action": "SteeringWheel",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "de450bec-f1e0-484a-a2a1-48b5896fdf4d",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Drive",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "f4f3f9d4-6263-4359-99ab-761ff65973b1",
+                    "name": "negative",
+                    "id": "6ae57cea-3156-4942-a0cb-81f3f45cf2e3",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drive",
+                    "action": "SteeringWheel",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "right",
-                    "id": "e2e7e21f-a8c7-4646-9b26-5e2b9cde0273",
+                    "name": "positive",
+                    "id": "5aee4264-b58d-4b41-9d33-90cb06cf5803",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drive",
+                    "action": "SteeringWheel",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "be2d4dc3-05ba-4010-a603-af154dff786d",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Break",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cacc126c-cd82-4585-8f1b-542f07eb8f52",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gas",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e094755-01ab-4a7a-8c8d-2a351f02f10c",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Clutch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

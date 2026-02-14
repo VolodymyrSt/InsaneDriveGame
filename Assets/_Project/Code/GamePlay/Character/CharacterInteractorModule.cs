@@ -16,6 +16,8 @@ namespace _Project.Code.GamePlay.Character
         private readonly float _interactionDistance;
         
         private IInteractable _targetInteractable;
+        private IGrabInteractable _currentGrabInteractable;
+        private bool _requestedMousePressed;
         
         public CharacterInteractorModule(ICamera camera, Transform cameraTarget, CharacterConfigSO config
             , LayerMask interactionLayer, IEventBus eventBus)
@@ -28,9 +30,12 @@ namespace _Project.Code.GamePlay.Character
             _interactionDistance = config.InteractionDistance;
         }
 
+        public void RequestInput(bool requestedMousePressed) => 
+            _requestedMousePressed = requestedMousePressed;
+
         public void UpdateTarget()
         {
-            if (Physics.Raycast(_cameraTarget.position, _camera.Transform.forward, out var hit, _interactionDistance, _interactionLayer))
+            if (RequestedInteraction(out RaycastHit hit))
             {
                 if (hit.collider.TryGetComponent(out IInteractable interactable))
                     SetTarget(interactable);
@@ -39,6 +44,34 @@ namespace _Project.Code.GamePlay.Character
             }
             else
                 TryCleanTarget();
+        }
+
+
+        public void TryGrabSmth()
+        {
+            if (_requestedMousePressed)
+            {
+                if (RequestedInteraction(out RaycastHit hit))
+                {
+                    if (hit.collider.TryGetComponent(out IGrabInteractable interactable))
+                    {
+                        if (_currentGrabInteractable == interactable || 
+                            _currentGrabInteractable != null) return;
+                        
+                        _currentGrabInteractable = interactable;
+                        interactable.Grab(); 
+
+                        Debug.Log("Interacting with " + _currentGrabInteractable);
+                    }
+                }
+            }
+            else
+            {
+                if (_currentGrabInteractable == null) return;
+                
+                _currentGrabInteractable.Release();
+                _currentGrabInteractable = null;
+            }
         }
 
         public void TryInteract() => 
@@ -61,5 +94,8 @@ namespace _Project.Code.GamePlay.Character
             _targetInteractable = interactable;
             _eventBus.Publish(new OnInteractableFound(interactable));
         }
+        
+        private bool RequestedInteraction(out RaycastHit hit) =>
+            Physics.Raycast(_cameraTarget.position, _camera.Transform.forward, out hit, _interactionDistance, _interactionLayer);
     }
 }

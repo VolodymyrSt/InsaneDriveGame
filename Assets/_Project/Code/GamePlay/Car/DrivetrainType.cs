@@ -1,4 +1,4 @@
 namespace _Project.Code.GamePlay.Car
 {
-    public enum DrivetrainType { FWD, RWD }
+    public enum DrivetrainType { FWD, RWD, BOTH }
 }

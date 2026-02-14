@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Project.Code.Configs.Character
 {
-    [CreateAssetMenu(fileName = "Character Config", menuName = "Configs")]
+    [CreateAssetMenu(fileName = "Character Config", menuName = "Configs/Character")]
     public class CharacterConfigSO : ScriptableObject
     {
         [Header("Speed")]
